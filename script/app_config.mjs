@@ -10,9 +10,9 @@ import os from 'os';
 const desktopEntry = `[Desktop Entry]
 Encoding=UTF-8
 Categories=Office
-Exec=com-pake-${process.env.NAME}
-Icon=com-pake-${process.env.NAME}
-Name=com-pake-${process.env.NAME}
+Exec=com-stemstar-${process.env.NAME}
+Icon=com-stemstar-${process.env.NAME}
+Name=com-stemstar-${process.env.NAME}
 Name[zh_CN]=${process.env.NAME_ZH}
 StartupNotify=true
 Terminal=false
@@ -32,14 +32,14 @@ const variables = {
   linux: {
     configFilePath: 'src-tauri/tauri.linux.conf.json',
     iconPath: `src-tauri/png/${process.env.NAME}_512.png`,
-    productName: `com-pake-${process.env.NAME}`,
+    productName: `com-stemstar-${process.env.NAME}`,
     defaultIconPath: 'src-tauri/png/icon_512.png',
     icon: [`png/${process.env.NAME}_512.png`],
     desktopEntry,
-    desktopEntryPath: `src-tauri/assets/com-pake-${process.env.NAME}.desktop`,
+    desktopEntryPath: `src-tauri/assets/com-stemstar-${process.env.NAME}.desktop`,
     desktopEntryConfig: {
-      configKey: `/usr/share/applications/com-pake-${process.env.NAME}.desktop`,
-      configValue: `assets/com-pake-${process.env.NAME}.desktop`,
+      configKey: `/usr/share/applications/com-stemstar-${process.env.NAME}.desktop`,
+      configValue: `assets/com-stemstar-${process.env.NAME}.desktop`,
     },
   },
   macos: {
