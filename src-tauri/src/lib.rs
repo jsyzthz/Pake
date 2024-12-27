@@ -38,6 +38,7 @@ pub fn run_app() {
         .plugin(tauri_plugin_oauth::init())
         .plugin(tauri_plugin_http::init())
         .plugin(tauri_plugin_shell::init())
+        .plugin(tauri_plugin_single_instance::init(|_, _, _| ()))
         .invoke_handler(tauri::generate_handler![
             download_file,
             download_file_by_binary
@@ -100,27 +101,21 @@ pub fn run_app() {
 
             Ok(())
         })
-        .on_window_event(|window, event| {
-            if let tauri::WindowEvent::CloseRequested { api, .. } = event {
-                let window = window.clone();
-
-                #[cfg(target_os = "macos")]
+        .on_window_event(|_window, _event| {
+            #[cfg(target_os = "macos")]
+            if let tauri::WindowEvent::CloseRequested { api, .. } = _event {
+                let window = _window.clone();
                 {
-                    let window_handle = window.clone();
                     tauri::async_runtime::spawn(async move {
-                        if window_handle.is_fullscreen().unwrap_or(false) {
-                            window_handle.set_fullscreen(false).unwrap();
+                        if window.is_fullscreen().unwrap_or(false) {
+                            window.set_fullscreen(false).unwrap();
                             // Give a small delay to ensure the full-screen exit operation is completed.
                             tokio::time::sleep(Duration::from_millis(900)).await;
                         }
-                        window_handle.minimize().unwrap();
-                        window_handle.hide().unwrap();
+                        window.minimize().unwrap();
+                        window.hide().unwrap();
                     });
                 }
-
-                #[cfg(not(target_os = "macos"))]
-                window.close().unwrap();
-
                 api.prevent_close();
             }
         })
