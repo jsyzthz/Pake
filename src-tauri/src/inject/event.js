@@ -197,7 +197,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // Handling external link redirection, _blank will automatically open.
       if (target === '_blank') {
-        e.preventDefault();
+        event.preventDefault();
+        event.stopPropagation();
+        handleExternalLink(absoluteUrl);
         return;
       }
 
